@@ -3,26 +3,52 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
     private ArrayList<LineSegment> lineSegments;
+    private Point[] originPoints;
 
     public BruteCollinearPoints(Point[] points) {
         // finds all line segments containing 4 points
-        if (points == null) {
-            throw new IllegalArgumentException("points is null");
-        }
+        checkPoint(points);
+        checkNullPoint(points);
+
+        originPoints = points.clone();
+        Arrays.sort(originPoints);
+        checkRepeatedPoint(originPoints);
 
         lineSegments = new ArrayList<LineSegment>();
-        Arrays.sort(points);
 
-        for (int i = 0; i < points.length - 3; i++) {
-            for (int j = i + 1; j < points.length - 2; j++) {
-                for (int k = j + 1; k < points.length - 1; k++) {
-                    for (int l = k + 1; l < points.length; l++) {
-                        if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
-                                && points[i].slopeTo(points[k]) == points[i].slopeTo(points[l])) {
-                            lineSegments.add(new LineSegment(points[i], points[l]));
+        for (int i = 0; i < originPoints.length - 3; i++) {
+            for (int j = i + 1; j < originPoints.length - 2; j++) {
+                for (int k = j + 1; k < originPoints.length - 1; k++) {
+                    for (int l = k + 1; l < originPoints.length; l++) {
+                        if (originPoints[i].slopeTo(originPoints[j]) == originPoints[i].slopeTo(originPoints[k])
+                                && originPoints[i].slopeTo(originPoints[k]) == originPoints[i]
+                                        .slopeTo(originPoints[l])) {
+                            lineSegments.add(new LineSegment(originPoints[i], originPoints[l]));
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void checkPoint(Point[] points) {
+        if (points == null) {
+            throw new IllegalArgumentException("points is null");
+        }
+    }
+
+    private void checkNullPoint(Point[] points) {
+        for (int i = 0; i < points.length; i++) {
+            if (points[i] == null) {
+                throw new IllegalArgumentException("point " + points[i] + " is null.");
+            }
+        }
+    }
+
+    private void checkRepeatedPoint(Point[] points) {
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i].compareTo(points[i + 1]) == 0) {
+                throw new IllegalArgumentException("repeated point: " + points[i] + " " + points[i + 1] + ".");
             }
         }
     }
@@ -39,7 +65,7 @@ public class BruteCollinearPoints {
     }
 
     // public static void main(String[] args) {
-    // File file = new File("collinear/Input8.txt");
+    // File file = new File("collinear/equidistant.txt");
 
     // // read the n points from a file
     // In in = new In(file);
