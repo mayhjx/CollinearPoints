@@ -13,9 +13,9 @@ public class BruteCollinearPoints {
         lineSegments = new ArrayList<LineSegment>();
         Arrays.sort(points);
 
-        for (int i = 0; i < points.length; i++) {
-            for (int j = i + 1; j < points.length; j++) {
-                for (int k = j + 1; k < points.length; k++) {
+        for (int i = 0; i < points.length - 3; i++) {
+            for (int j = i + 1; j < points.length - 2; j++) {
+                for (int k = j + 1; k < points.length - 1; k++) {
                     for (int l = k + 1; l < points.length; l++) {
                         if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
                                 && points[i].slopeTo(points[k]) == points[i].slopeTo(points[l])) {
@@ -39,37 +39,37 @@ public class BruteCollinearPoints {
     }
 
     // public static void main(String[] args) {
-    //     File file = new File("collinear/Input8.txt");
+    // File file = new File("collinear/Input8.txt");
 
-    //     // read the n points from a file
-    //     In in = new In(file);
-    //     int n = in.readInt();
-    //     StdOut.println(n);
+    // // read the n points from a file
+    // In in = new In(file);
+    // int n = in.readInt();
+    // StdOut.println(n);
 
-    //     Point[] points = new Point[n];
-    //     for (int i = 0; i < n; i++) {
-    //         int x = in.readInt();
-    //         int y = in.readInt();
-    //         points[i] = new Point(x, y);
-    //     }
+    // Point[] points = new Point[n];
+    // for (int i = 0; i < n; i++) {
+    // int x = in.readInt();
+    // int y = in.readInt();
+    // points[i] = new Point(x, y);
+    // }
 
-    //     // draw the points
-    //     StdDraw.enableDoubleBuffering();
-    //     StdDraw.setXscale(0, 32768);
-    //     StdDraw.setYscale(0, 32768);
-    //     for (Point p : points) {
-    //         p.draw();
-    //     }
-    //     StdDraw.show();
+    // // draw the points
+    // StdDraw.enableDoubleBuffering();
+    // StdDraw.setXscale(0, 32768);
+    // StdDraw.setYscale(0, 32768);
+    // for (Point p : points) {
+    // p.draw();
+    // }
+    // StdDraw.show();
 
-    //     // print and draw the line segments
-    //     BruteCollinearPoints collinear = new BruteCollinearPoints(points);
-    //     StdOut.println(collinear.numberOfSegments());
+    // // print and draw the line segments
+    // BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+    // StdOut.println(collinear.numberOfSegments());
 
-    //     for (LineSegment segment : collinear.segments()) {
-    //         StdOut.println(segment);
-    //         segment.draw();
-    //     }
-    //     StdDraw.show();
+    // for (LineSegment segment : collinear.segments()) {
+    // StdOut.println(segment);
+    // segment.draw();
+    // }
+    // StdDraw.show();
     // }
 }
